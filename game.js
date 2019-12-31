@@ -9,8 +9,8 @@ img.src = 'http://192.168.0.147:8080/game/pepe.png';
 var gameSound , loseSound; 
 function startGame() {
     
-    gameSound = new sound("http://192.168.0.147:8080/game/fragrance.mp3");
-    loseSound = new sound("http://192.168.0.147:8080/game/rubbish.mp3");
+    gameSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/fragrance.mp3");
+    loseSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/rubbish.mp3");
     gameSound.play();
     myGamePiece = new component(30, 30, "red", 320, 750);
     img.onload = myGameArea.start();
