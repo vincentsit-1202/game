@@ -5,7 +5,7 @@ var movebymouse = false;
 var score = 0;
 var ballsNumber = 0;
 const img = new Image();
-img.src = 'http://192.168.0.147:8080/game/pepe.png';
+img.src = 'https://raw.githack.com/vincentsit-1202/game/master/pepe.png';
 var gameSound , loseSound; 
 function startGame() {
     
