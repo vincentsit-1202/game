@@ -67,6 +67,7 @@ function startGame() {
             movebymouse = true;
         }
     }, false);
+    
     myGameArea.canvas.addEventListener("touchend", function (e) {
         var mouseEvent = new MouseEvent("mouseup", {});
         myGameArea.canvas.dispatchEvent(mouseEvent);
@@ -89,6 +90,14 @@ function startGame() {
     // Get the position of a touch relative to the canvas
     
 
+}
+function load(){
+    var r = confirm("Please turn on the volume!!!!!!");
+    if (r == true) {
+        startGame();
+      } else {
+        startGame();
+    }
 }
 function sound(src) {
     this.sound = document.createElement("audio");
