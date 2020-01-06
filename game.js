@@ -5,10 +5,10 @@ var movebymouse = false;
 
 const playerimg = new Image();
 const enermyimg = new Image();
-playerimg.src = 'http://192.168.0.147:8080/game/pepe.png';
-enermyimg.src = 'http://192.168.0.147:8080/game/rasengan.png';
-gameSound = new sound("http://192.168.0.147:8080/game/titania.mp3");
-loseSound = new sound("http://192.168.0.147:8080/game/rubbish.mp3");
+playerimg.src = 'https://raw.githack.com/vincentsit-1202/game/master/pepe.png';
+enermyimg.src = 'https://raw.githack.com/vincentsit-1202/game/master/rasengan.png';
+gameSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/titania.mp3");
+loseSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/rubbish.mp3");
 var gameSound , loseSound; 
 
 function startGame() {
