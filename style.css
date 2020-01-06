@@ -1,26 +1,106 @@
-body {
-    background-color: powderblue;
-  }
-  h1 {
-    color: blue;
-  }
-  p {
-    color: red;
-  }
-  canvas {
- 
-    border:1px solid #d3d3d3;
-    background-color: #000000;
+
+html{
+    font-size: 62.5%; /*10px*/
+    overflow-x: hidden;
+    
 }
-button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
+body {
+    padding-top:100px;
+    background-color:rgb(174, 179, 206);
+    font-size: 25px;
+
+    line-height: 1.6;
+    letter-spacing: normal;
+    overflow-x:hidden;
+
+    align-items: center;
+    justify-content: center ;
+    -webkit-print-color-adjust: exact;
+   
+}
+
+/* ボタン 
+--------------------------------------------------------*/
+	a:focus, *:focus { outline:none !important; }
+	.btn {
+		border:none;
+    border-radius: 30px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+    text-decoration: none; 
+    color: white;
+	}
+	@media screen and (max-width : 480px){
+	.btn.btn-sm {
+		min-width: 100px;
+	}
+	.btn.btn-spmin120 {
+		min-width: 120px;
+	}
+	}
+	.btn.focus,
+	.btn:focus,
+	.btn.hover,
+	.btn:hover,
+	.btn:active,
+	.btn.active.focus,
+	.btn.active:focus,
+	.btn.active:hover,
+	.btn:active.focus{
+		opacity:0.7;
+		background-color:inherit !important;
+		box-shadow: inset 0 0px 0px rgba(0,0,0,0.0);
+	}
+
+/*-------------------------------------------------------
+ ボタン メイン
+--------------------------------------------------------*/
+
+	.btn-primary {
+        background-color: #FF739E; /* メインカラー */
+        padding: 10px 20px;
+        width: 300px;
+        
+	}
+	.btn-primary:focus,
+	.btn-primary:hover,
+	.btn-primary:active {
+		background-color: #FF739E !important; /* メインカラー */
+		    border-color: #FF739E !important; /* メインカラー */
+				   color: #FFF !important;
   }
+  
+  .btn-game{
+
+    width: 100px;
+    margin: 0;
+  }
+
+  .centered-element {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    top: 50%;
+    margin-top: -50px;
+  }
+
+  div.btn-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 400px;
+  }
+
+  h1 {
+    margin: auto;
+    text-align: center;}
+    
+  div.canvas-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  

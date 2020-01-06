@@ -2,19 +2,21 @@ var myGamePiece;
 var myObstacles = [];
 var mousePos = {};
 var movebymouse = false;
-var score = 0;
-var ballsNumber = 0;
-const img = new Image();
-img.src = 'https://raw.githack.com/vincentsit-1202/game/master/pepe.png';
+
+const playerimg = new Image();
+const enermyimg = new Image();
+playerimg.src = 'http://192.168.0.147:8080/game/pepe.png';
+enermyimg.src = 'http://192.168.0.147:8080/game/rasengan.png';
+gameSound = new sound("http://192.168.0.147:8080/game/titania.mp3");
+loseSound = new sound("http://192.168.0.147:8080/game/rubbish.mp3");
 var gameSound , loseSound; 
+
 function startGame() {
-    
-    gameSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/fragrance.mp3");
-    loseSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/rubbish.mp3");
-    gameSound.play();
+ 
+
+    myGameArea.start();
     myGamePiece = new component(30, 30, "red", 320, 750);
-    img.onload = myGameArea.start();
-    myGameArea.context.drawImage(img, 320, 750, 30, 30);
+    myGameArea.context.drawImage(playerimg, 320, 750, 30, 30);
     myGameArea.canvas.addEventListener('mousedown', function (evt) {
         
         mousePos = getMousePos(myGameArea.canvas, evt);
@@ -67,7 +69,6 @@ function startGame() {
             movebymouse = true;
         }
     }, false);
-    
     myGameArea.canvas.addEventListener("touchend", function (e) {
         var mouseEvent = new MouseEvent("mouseup", {});
         myGameArea.canvas.dispatchEvent(mouseEvent);
@@ -91,14 +92,6 @@ function startGame() {
     
 
 }
-function load(){
-    var r = confirm("Please turn on the volume!!!!!!");
-    if (r == true) {
-        startGame();
-      } else {
-        startGame();
-    }
-}
 function sound(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
@@ -109,14 +102,15 @@ function sound(src) {
     document.body.appendChild(this.sound);
     this.play = function(){
       this.sound.play();
+     
     }
+ 
     this.stop = function(){
-      this.sound.pause();
-    }
+        this.sound.pause();
+        this.sound.currentTime = 0;
+      }
   }
-function play(){
-    gameSound.play();
-}
+
 function getTouchPos(canvasDom, touchEvent) {
     var rect = canvasDom.getBoundingClientRect();
     return {
@@ -138,16 +132,26 @@ function collides(rects, x, y) {
 
     return isCollision;
 }
-
+// function load(){
+//     var r = confirm("Please turn on the volume!!!!!!");
+//     if (r == true) {
+//         startGame();
+//       } else {
+//         startGame();
+//     }
+// }
 var myGameArea = {
     canvas: document.getElementById('myCanvas'),
+    
     start: function () {
-     
+        this.canvas.width = this.canvas.clientWidth;
+        this.canvas.height= this.canvas.clientHeight;
+        this.score = 0 ;
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
-  
+        this.ballsnumber = 0;
+        this.interval = setInterval(updateGameArea, 1000/60);
+        gameSound.play();
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -160,6 +164,20 @@ var myGameArea = {
     }
 }
 
+function restart(){
+    document.getElementById('restart').style.visibility='hidden';
+    myObstacles = [];
+    movebymouse = false;
+    myGameArea.start();
+}
+function game(){
+    widget =  document.getElementById('restart');
+    widget.style.visibility = 'hidden';
+    widget.onclick =  function() { restart(); }
+    widget.innerHTML = "Restart";
+    startGame();
+}
+
 function component(width, height, color, x, y) {
     this.width = width;
     this.height = height;
@@ -167,10 +185,12 @@ function component(width, height, color, x, y) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
+
     this.update = function () {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
+      
     }
     this.newPos = function () {
         this.x += this.speedX;
@@ -195,17 +215,17 @@ function component(width, height, color, x, y) {
 
 function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
-
+    //console.log(myGameArea.context)
     myGameArea.clear();
     myGameArea.frameNo += 1;
+   
+    myGameArea.score = myGameArea.frameNo * 20
 
-    score = myGameArea.frameNo * 20
-
-    if (score < 10000)
-        ballsNumber = score / 2000 + 1
+    if (myGameArea.score < 10000)
+    myGameArea.ballsNumber = myGameArea.score / 2000 + 1
     else
-        ballsNumber = 6 + score / 10000
-    if (myObstacles.length < ballsNumber) {
+    myGameArea.ballsNumber = 6 + myGameArea.score / 10000
+    if (myObstacles.length < myGameArea.ballsNumber) {
 
         x = getRandomInt(0, myGameArea.canvas.width - 30);;
 
@@ -219,24 +239,25 @@ function updateGameArea() {
         if (myObstacles[i].y > 800) {
             myObstacles.splice(i, 1);
         }
-        if (score > 60000)
+        if (myGameArea.score > 60000)
             myObstacles[i].y += 30
         else
-            myObstacles[i].y += score / 2000
-
+            myObstacles[i].y += myGameArea.score / 2000
+        
         myObstacles[i].update();
-
+        myGameArea.context.drawImage(enermyimg, myObstacles[i].x - 12, myObstacles[i].y -12, 55, 55);
     }
-    console.log(myObstacles.length)
+    //console.log(myObstacles.length)
     myGamePiece.update();
-    myGameArea.context.drawImage(img, myGamePiece.x - 20, myGamePiece.y - 20, 60, 60);
+    myGameArea.context.drawImage(playerimg, myGamePiece.x - 20, myGamePiece.y - 20, 60, 60);
 
     myGameArea.context.fillStyle = "white"
     myGameArea.context.font = "30px Comic Sans MS";
-    myGameArea.context.fillText('score: ' + score, 10, 50);
+    myGameArea.context.fillText('score: ' + myGameArea.score, 10, 50);
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             myGameArea.stop();
+            document.getElementById('restart').style.visibility = 'visible';
             return;
         }
     }
