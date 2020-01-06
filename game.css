@@ -7,7 +7,7 @@ canvas {
     
     
     background-size: 100% 100%;
-    background-image: url('http://192.168.0.147:8080/game/640.jpg');
+    background-image: url('https://raw.githack.com/vincentsit-1202/game/master/640.jpg');
 
     height:  800px;
     width: 640px;
