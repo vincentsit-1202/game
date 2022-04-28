@@ -8,17 +8,17 @@ const enermyimg = new Image();
 playerimg.src = 'https://raw.githack.com/vincentsit-1202/game/master/pepe.png';
 enermyimg.src = 'https://raw.githack.com/vincentsit-1202/game/master/rasengan.png';
 gameSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/titania.mp3");
-loseSound = new sound("https://raw.githack.com/vincentsit-1202/game/master/rubbish.mp3");
-var gameSound , loseSound; 
+
+var gameSound;
 
 function startGame() {
- 
+
 
     myGameArea.start();
     myGamePiece = new component(30, 30, "red", 320, 750);
     myGameArea.context.drawImage(playerimg, 320, 750, 30, 30);
     myGameArea.canvas.addEventListener('mousedown', function (evt) {
-        
+
         mousePos = getMousePos(myGameArea.canvas, evt);
 
         if (collides(myGamePiece, mousePos.x, mousePos.y)) {
@@ -40,32 +40,32 @@ function startGame() {
 
             movebymouse = false
     }, false);
-      document.body.addEventListener("touchstart", function (e) {
+    document.body.addEventListener("touchstart", function (e) {
         if (e.target == canvas) {
-          e.preventDefault();
+            e.preventDefault();
         }
-      }, false);
-      document.body.addEventListener("touchend", function (e) {
+    }, false);
+    document.body.addEventListener("touchend", function (e) {
         if (e.target == canvas) {
-          e.preventDefault();
+            e.preventDefault();
         }
-      }, false);
-      document.body.addEventListener("touchmove", function (e) {
+    }, false);
+    document.body.addEventListener("touchmove", function (e) {
         if (e.target == canvas) {
-          e.preventDefault();
+            e.preventDefault();
         }
-      }, false);
+    }, false);
     myGameArea.canvas.addEventListener("touchstart", function (e) {
         mousePos = getTouchPos(myGameArea.canvas, e);
-        
+
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousedown", {
             clientX: touch.clientX,
             clientY: touch.clientY
         });
         myGameArea.canvas.dispatchEvent(mouseEvent);
-        
-        if (collides(myGamePiece, mouseEvent.clientX,  mouseEvent.clientY)) {
+
+        if (collides(myGamePiece, mouseEvent.clientX, mouseEvent.clientY)) {
             movebymouse = true;
         }
     }, false);
@@ -74,7 +74,7 @@ function startGame() {
         myGameArea.canvas.dispatchEvent(mouseEvent);
         if (movebymouse)
 
-        movebymouse = false
+            movebymouse = false
     }, false);
     myGameArea.canvas.addEventListener("touchmove", function (e) {
         var touch = e.touches[0];
@@ -85,11 +85,11 @@ function startGame() {
         myGameArea.canvas.dispatchEvent(mouseEvent);
         if (movebymouse)
 
-        myGamePiece.x = mouseEvent.clientX - myGamePiece.width / 2;
+            myGamePiece.x = mouseEvent.clientX - myGamePiece.width / 2;
     }, false);
 
     // Get the position of a touch relative to the canvas
-    
+
 
 }
 function sound(src) {
@@ -100,16 +100,16 @@ function sound(src) {
     this.sound.style.display = "none";
     this.sound.loop = true
     document.body.appendChild(this.sound);
-    this.play = function(){
-      this.sound.play();
-     
+    this.play = function () {
+        this.sound.play();
+
     }
- 
-    this.stop = function(){
+
+    this.stop = function () {
         this.sound.pause();
         this.sound.currentTime = 0;
-      }
-  }
+    }
+}
 
 function getTouchPos(canvasDom, touchEvent) {
     var rect = canvasDom.getBoundingClientRect();
@@ -142,15 +142,15 @@ function collides(rects, x, y) {
 // }
 var myGameArea = {
     canvas: document.getElementById('myCanvas'),
-    
+
     start: function () {
         this.canvas.width = this.canvas.clientWidth;
-        this.canvas.height= this.canvas.clientHeight;
-        this.score = 0 ;
+        this.canvas.height = this.canvas.clientHeight;
+        this.score = 0;
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
         this.ballsnumber = 0;
-        this.interval = setInterval(updateGameArea, 1000/60);
+        this.interval = setInterval(updateGameArea, 1000 / 60);
         gameSound.play();
     },
     clear: function () {
@@ -159,21 +159,19 @@ var myGameArea = {
     stop: function () {
         clearInterval(this.interval);
         gameSound.stop();
-        loseSound.sound.loop = false;
-        loseSound.play();
     }
 }
 
-function restart(){
-    document.getElementById('restart').style.visibility='hidden';
+function restart() {
+    document.getElementById('restart').style.visibility = 'hidden';
     myObstacles = [];
     movebymouse = false;
     myGameArea.start();
 }
-function game(){
-    widget =  document.getElementById('restart');
+function game() {
+    widget = document.getElementById('restart');
     widget.style.visibility = 'hidden';
-    widget.onclick =  function() { restart(); }
+    widget.onclick = function () { restart(); }
     widget.innerHTML = "Restart";
     startGame();
 }
@@ -190,7 +188,7 @@ function component(width, height, color, x, y) {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-      
+
     }
     this.newPos = function () {
         this.x += this.speedX;
@@ -218,13 +216,13 @@ function updateGameArea() {
     //console.log(myGameArea.context)
     myGameArea.clear();
     myGameArea.frameNo += 1;
-   
+
     myGameArea.score = myGameArea.frameNo * 20
 
     if (myGameArea.score < 10000)
-    myGameArea.ballsNumber = myGameArea.score / 2000 + 1
+        myGameArea.ballsNumber = myGameArea.score / 2000 + 1
     else
-    myGameArea.ballsNumber = 6 + myGameArea.score / 10000
+        myGameArea.ballsNumber = 6 + myGameArea.score / 10000
     if (myObstacles.length < myGameArea.ballsNumber) {
 
         x = getRandomInt(0, myGameArea.canvas.width - 30);;
@@ -243,9 +241,9 @@ function updateGameArea() {
             myObstacles[i].y += 30
         else
             myObstacles[i].y += myGameArea.score / 2000
-        
+
         myObstacles[i].update();
-        myGameArea.context.drawImage(enermyimg, myObstacles[i].x - 12, myObstacles[i].y -12, 55, 55);
+        myGameArea.context.drawImage(enermyimg, myObstacles[i].x - 12, myObstacles[i].y - 12, 55, 55);
     }
     //console.log(myObstacles.length)
     myGamePiece.update();
